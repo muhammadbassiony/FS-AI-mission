@@ -38,3 +38,33 @@ class KalmanFilter(object):
         I = np.eye(self.n) #1 
         self.P = np.dot(np.dot(I - np.dot(K, self.H), self.P), 
         	(I - np.dot(K, self.H)).T) + np.dot(np.dot(K, self.R), K.T)    #corrected P
+        
+        
+###########################################################
+
+
+if __name__ == '__main__':
+    print("starting test")
+    
+    x0 = np.array([0, 5])
+    f = np.array([[1, 0.5], [0,1]])
+    b = np.array([0, 0.5])
+    p = np.array([[0.01, 0], [0, 1]])
+    q = np.array([[0.1, 0], [0, 0.1]])
+    h = np.array([[1, 0]])
+    r = 0.05
+    
+    
+    kalman = KalmanFilter(F=f, B=b, H=h, Q=q, R=r, P=p, x0=x0)
+    
+    u = -2  
+    x_pred = kalman.predict(u)
+    print("\npredicted X: ", np.array(kalman.predict(u)))
+    
+    z = 2.2
+    kalman.update(z)
+    
+    print("\nUpdated\nupdated X:", kalman.x)
+    
+    
+    
