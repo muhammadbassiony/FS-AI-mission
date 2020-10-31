@@ -32,7 +32,7 @@ class Bicycle():
         
         #implementing the differential equations
         xc_dot = v * np.cos(self.theta + self.beta) #rate of change of pose in x axis
-        yc_dot = v * np.sin(self.theta + self.beta) rate of change of y in the y axis
+        yc_dot = v * np.sin(self.theta + self.beta) #rate of change of y in the y axis
         theta_dot = (v / self.L) * (np.cos(self.beta) * np.tan(self.delta)) #rate of change of yaw
         
         
@@ -44,3 +44,20 @@ class Bicycle():
         self.theta += theta_dot * self.sample_time 
         
         self.delta = delta
+
+# you can test the model by having an initial delta angle and initial angular velocities for the wheels
+# then you loop through over the step functions at the step time increments and calling the step function 
+#with the desired parameters
+
+
+#simple test 
+model = Bicycle()
+print("initialized bike")
+print("parameters before step are all initialized to zero")
+
+for i in range(20):
+    model.step(2.8, 2.9, 0.23) 
+    #entered the same parameters through all 20 steps ~ constant curvature and speed
+    
+    print("\npose after single step: \npose in x = ", model.xc, 
+          "\npose in y = ", model.yc, "\nyaw angle = ", model.theta)
